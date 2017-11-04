@@ -1,5 +1,5 @@
 /*
-    - AMG8833 from Adafruit
+    - AMG8833 grideye from Adafruit
     - ESP32 (nodeMCU)
     - SSD_1332 OLED Color 0.96inch 96x64 pixel
     - based on Adafruit_AMG88xx library
@@ -86,15 +86,15 @@ uint16_t amg8833_read12bitword(uint8_t reg){
 
 void amg8833_begin() {
   Wire.begin();
-  delay(100);  
+  delay(10);  
+  amg8833_setregister(AMG8833_RST, AMG8833_INITIAL_RESET);
+  delay(200);
   amg8833_setregister(AMG8833_PCTL,AMG8833_NORMAL_MODE);
-  delay(100);
-  amg8833_setregister(AMG8833_RST, AMG8833_NORMAL_MODE);
-  delay(100);
+  delay(10);
   amg8833_setregister(AMG8833_FPSC,AMG8833_FPS_10);
-  delay(200);
+  delay(20);
   amg8833_setregister(AMG8833_INTC,0);
-  delay(200);
+  delay(20);
 }
 
 void amg8833_readPixels(float *buf) {
@@ -180,6 +180,6 @@ void loop(void) {
   tft.setTextScale(0);
   tft.println(amg8833_readThermistor()); 
   digitalWrite(2, false);
-  delay(30);
+  delay(80);
 }
 
